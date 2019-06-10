@@ -33,15 +33,19 @@ module.exports = {
                 use : "vue-loader"
             },
             {
+                test:/\.(jpg|png|gif|bmp|jpeg)$/,
+                use:'url-loader'
+            },
+            {
                 test:/\.(ttf|eot|SVG|woff|woff2)$/,
                 use:["url-loader"]
+            },
+            {
+                test:/\.js$/,
+                exclude:/node_modules/,
+                use:'babel-loader'
+                
             }
         ]
-    },
-    resolve:{
-        alias:{
-            // "vue$":"vue/dist/vue.js"
-            // 当在main.js中引入Vue时指定到此路径安装
-        }
     }
 }
