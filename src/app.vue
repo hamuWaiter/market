@@ -1,6 +1,10 @@
 <template>
   <div class="appcontainer">
-    <mt-header fixed title="固定在顶部"></mt-header>
+    <mt-header fixed title="Vue实战商城" style="z-index:999;">
+      <div slot="left" @click="goBack" v-show="flag">
+        <mt-button icon="back">返回</mt-button>
+      </div>
+    </mt-header>
 
 	<transition>
 		<router-view></router-view>
@@ -18,7 +22,7 @@
 			</router-link>
 			<router-link class="mui-tab-item1" to="/shopcar">
 				<span class="mui-icon mui-icon-extra mui-icon-extra-cart">
-					<span class="mui-badge">0</span>
+					<span class="mui-badge" id="badge">{{$store.getters.getTotal}}</span>
 				</span>
 				<span class="mui-tab-label">购物车</span>
 			</router-link>
@@ -34,13 +38,26 @@
 export default {
   data() {
     return {
-      
-    };
+      flag: false
+    }
   },
-
+  created(){
+    this.flag = this.$route.path === "/home" ? false : true;
+  },
   methods: {
-   
-    
+   goBack(){
+     this.$router.go(-1);
+   }
+  },
+  watch:{
+    '$route.path':function(newVal){
+      //路由改变显示返回按钮
+        this.flag = true;
+      if(newVal == "/home"){
+        // 回到首页隐藏返回按钮
+        this.flag = false;
+      }
+    }
   }
 }
 </script>
@@ -62,6 +79,9 @@ export default {
 .v-enter-active,
 .v-leave-active{
 	transition: all .4s ease;
+
+
+
 }
 .mui-bar-tab .mui-tab-item1.mui-active {
     color: #007aff;

@@ -3,12 +3,12 @@
         <h1>发表评论</h1>
         <hr>
         <textarea placeholder="请输入要发表的评论" v-model="msg" @keyup.enter="submit"></textarea>
-        <mt-button type="primary" size="large" @click="submit">发表评论</mt-button>
+        <mt-button type="primary" size="large" @click="submit" class="send">发表评论</mt-button>
         <p class="cmt-list" v-for="(item,i) in list" :key="item.id">
             <span>{{i+1}}楼：&nbsp;用户 ：&nbsp;{{item.name}}&nbsp;发表时间：{{item.date|date}}</span>
             <span>{{item.content}}</span>
         </p>
-        <mt-button type="danger" size="large" plain>加载更多</mt-button>
+        <mt-button type="danger" size="large" plain class="send">加载更多</mt-button>
     </div>
 </template>
 <script>
@@ -24,6 +24,7 @@ export default {
             ]
         }
     },
+    props:["id"],
    methods:{
        submit(){
            if(this.msg.match(" ")) return;
@@ -41,16 +42,22 @@ export default {
 </script>
 <style lang="scss" scoped>
     .cmt-container{
-        h1{font-size: 16px;}
+        h1{
+            font-size: 16px;
+        }
         textarea{
             font-size: 14px;
             margin: 0;
-            }
+        }
+        .send{
+            font-size: 14px;
+        }
         .cmt-list{
             margin: 0;
         }
         .cmt-list span{
             display: block;
+            font-size: 12px;
         }
         .cmt-list span:nth-of-type(1){
             background-color:rgba(0,0,0,.1);
